@@ -11,12 +11,14 @@
             "id": "60148a345536e15c",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "Pasted image 20260722101220.png"
+                "file": "Assignments.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "Pasted image 20260722101220"
+              "icon": "lucide-file",
+              "title": "Assignments"
             }
           }
         ]
@@ -92,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Pasted image 20260722101220.png",
+                "file": "Assignments.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Rückverweise auf Pasted image 20260722101220"
+              "title": "Rückverweise auf Assignments"
             }
           },
           {
@@ -111,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Pasted image 20260722101220.png",
+                "file": "Assignments.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Ausgehende Links von Pasted image 20260722101220 öffnen"
+              "title": "Ausgehende Links von Assignments öffnen"
             }
           },
           {
@@ -154,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Pasted image 20260722101220.png",
+                "file": "Assignments.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Gliederung von Pasted image 20260722101220"
+              "title": "Gliederung von Assignments"
             }
           },
           {
@@ -192,13 +194,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f4c829953bacf825",
+  "active": "60148a345536e15c",
   "lastOpenFiles": [
+    "Pasted image 20260722101220.png",
     "Adam Übungen/hello.py",
     "Test2",
     "Test",
     "Assignments.md",
-    "Pasted image 20260722101220.png",
     "balaasd",
     "hello.py",
     "Adam Übungen"
