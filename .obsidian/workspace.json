@@ -194,8 +194,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f4c829953bacf825",
+  "active": "6a5402fd47784bbe",
   "lastOpenFiles": [
+    "Adam Übungen/banking.py",
+    "banking.py",
+    "Adam Übungen/tax.py",
+    "Adam Übungen/pseudo.py",
+    "tax.py",
     "Assignments.md",
     "pseudo.py",
     "Pasted image 20260722101220.png",
@@ -203,7 +208,6 @@
     "Test2",
     "Test",
     "balaasd",
-    "hello.py",
-    "Adam Übungen"
+    "hello.py"
   ]
 }
