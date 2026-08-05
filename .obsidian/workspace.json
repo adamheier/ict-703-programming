@@ -11,14 +11,12 @@
             "id": "60148a345536e15c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "Assignments.md",
-                "mode": "source",
-                "source": false
+                "file": "Folien/Modul 3/ICT703 - Module 3 - Topic 1 - Iteration.pdf"
               },
-              "icon": "lucide-file",
-              "title": "Assignments"
+              "icon": "lucide-file-text",
+              "title": "ICT703 - Module 3 - Topic 1 - Iteration"
             }
           }
         ]
@@ -78,7 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "02de2aaf51414927",
@@ -180,7 +178,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 212.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -194,20 +192,20 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6a5402fd47784bbe",
+  "active": "f4c829953bacf825",
   "lastOpenFiles": [
+    "Adam Übungen/rock_paper_scissors.py",
+    "Adam Übungen/neu.py",
+    "neu.py",
+    "Assignments.md",
+    "Folien/Modul 3/ICT703 - Module 3 - Topic 1 - Iteration.pdf",
+    "Folien/Modul 3/ICT703 - Module 3 - Topic 1 - Iteration.pptx",
+    "Folien/Modul 3",
+    "Folien",
     "Adam Übungen/banking.py",
     "banking.py",
     "Adam Übungen/tax.py",
     "Adam Übungen/pseudo.py",
-    "tax.py",
-    "Assignments.md",
-    "pseudo.py",
-    "Pasted image 20260722101220.png",
-    "Adam Übungen/hello.py",
-    "Test2",
-    "Test",
-    "balaasd",
-    "hello.py"
+    "Pasted image 20260722101220.png"
   ]
 }
