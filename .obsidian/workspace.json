@@ -192,20 +192,20 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f4c829953bacf825",
+  "active": "6a5402fd47784bbe",
   "lastOpenFiles": [
+    "oli-practices/__pycache__/module2.cpython-314-pytest-9.0.3.pyc",
+    "oli-practices/module2-w3.py",
+    "oli-practices/module2-w2.py",
+    "oli-practices/module2-w1.py",
+    "oli-practices/__pycache__",
+    "oli-practices",
     "Adam Übungen/rock_paper_scissors.py",
     "Adam Übungen/neu.py",
     "neu.py",
     "Assignments.md",
     "Folien/Modul 3/ICT703 - Module 3 - Topic 1 - Iteration.pdf",
     "Folien/Modul 3/ICT703 - Module 3 - Topic 1 - Iteration.pptx",
-    "Folien/Modul 3",
-    "Folien",
-    "Adam Übungen/banking.py",
-    "banking.py",
-    "Adam Übungen/tax.py",
-    "Adam Übungen/pseudo.py",
     "Pasted image 20260722101220.png"
   ]
 }
