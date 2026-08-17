@@ -7,7 +7,7 @@
 Which is a valid Python variable name?
 
 - [ ] 2total
-- [ ] total_2
+- [x] total_2
 - [ ] total-2
 - [ ] class
 
@@ -27,7 +27,7 @@ else:
 ```
 
 - [ ] A
-- [ ] B
+- [x] B
 - [ ] C
 - [ ] Nothing
 
@@ -39,7 +39,7 @@ What is the data type of `True`?
 - [ ] int
 - [ ] float
 - [ ] str
-- [ ] bool
+- [x] bool
 
 ---
 
@@ -48,7 +48,7 @@ Suppose `word = "Coding"`. What is the value of `word[2]`?
 
 - [ ] C
 - [ ] o
-- [ ] d
+- [x] d
 - [ ] n
 
 ---
@@ -62,7 +62,7 @@ fruits.remove("banana")
 ```
 
 - [ ] ["apple", "banana", "cherry"]
-- [ ] ["apple", "cherry"]
+- [x] ["apple", "cherry"]
 - [ ] ["banana"]
 - [ ] Error
 
@@ -76,7 +76,7 @@ numbers = [1, 2, 3]
 print(numbers[5])
 ```
 
-- [ ] IndexError
+- [x] IndexError
 - [ ] KeyError
 - [ ] TypeError
 - [ ] ValueError
@@ -86,7 +86,7 @@ print(numbers[5])
 ### Question 7 (1 point)
 Suppose `xs = "0123456789"`, which slice produces `"8642"`?
 
-- [ ] xs[8:0:-2]
+- [x] xs[8:0:-2]
 - [ ] xs[0:8:2]
 - [ ] xs[8::-2]
 - [ ] xs[2:8:2]

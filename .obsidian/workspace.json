@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Folien/Module 5/Practice Quizzes/Practice Quiz 2.md",
+                "file": "slides/Module 5/Practice Quizzes/Practice Quiz 2.md",
                 "mode": "source",
                 "source": false
               },
@@ -196,8 +196,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6a5402fd47784bbe",
+  "active": "60148a345536e15c",
   "lastOpenFiles": [
+    "Assignments.md",
+    "Adam Übungen/pseudo.py",
+    "Adam Übungen",
+    "slides/Module 5/Practice Quizzes/Practice Quiz 2.md",
     "practices-oli/__pycache__/module2.cpython-314-pytest-9.0.3.pyc",
     "practices-oli/module4.py",
     "practices-oli/module3-part2.py",
@@ -206,13 +210,8 @@
     "practices-oli/__pycache__",
     "practices-oli/module2-part1.py",
     "practices-oli",
-    "practices-adam/tax.py",
-    "practices-adam/rock_paper_scissors.py",
-    "practices-adam/pseudo.py",
-    "Folien/Module 5/Practice Quizzes/Practice Quiz 4.md",
-    "Folien/Module 5/Practice Quizzes/Practice Quiz 3.md",
-    "Folien/Module 5/Practice Quizzes/Practice Quiz 2.md",
-    "Images/Pasted image 20260722101220.png",
-    "Assignments.md"
+    "slides/Module 5/Practice Quizzes/Practice Quiz 4.md",
+    "slides/Module 5/Practice Quizzes/Practice Quiz 3.md",
+    "slides/images/Pasted image 20260722101220.png"
   ]
 }
