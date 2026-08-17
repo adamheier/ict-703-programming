@@ -33,6 +33,9 @@ if __name__ == "__main__":
     print("Yellow M&M's:", yellow_dose)
     print("Brown M&M's:", brown_dose)
 
+'''Expand the M&M program to print out the number of different M&Ms in the bowl'''
+print("Number of different M&M's in the bowl:", len(set(mms)))
+
 
 #Three jars of lollies. Three piles and I want to eat my favorite lillies last. Pile1 are my favourite lollies and pile 3 my least favourite. The lollies are: pile3 = orange, pile2 = berry, pile1 = cherry.
 '''
@@ -61,6 +64,8 @@ def sort_lollies(lollies):
 
     return pile1, pile2, pile3
 
+
+'''
 # main
 if __name__ == "__main__":
     lollies = ['orange', 'berry', 'cherry', 'orange', 'berry', 'cherry', 'cherry', 'berry', 'cherry', 'cherry']
@@ -68,3 +73,5 @@ if __name__ == "__main__":
     print("Pile 1 (Favorite - Cherry):", pile1)
     print("Pile 2 (Medium - Berry):", pile2)
     print("Pile 3 (Least Favorite - Orange):", pile3)
+
+    '''
