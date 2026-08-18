@@ -11,12 +11,14 @@
             "id": "60148a345536e15c",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "slides/Module 4/ICT703 - Module 4 - Workshop Instructions - Tagged.pdf"
+                "file": "Module 1-4 Summary.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-file-text",
-              "title": "ICT703 - Module 4 - Workshop Instructions - Tagged"
+              "icon": "lucide-file",
+              "title": "Module 1-4 Summary"
             }
           }
         ]
@@ -196,12 +198,13 @@
   },
   "active": "60148a345536e15c",
   "lastOpenFiles": [
+    "slides/Module 4/ICT703 - Module 4 - Workshop Instructions - Tagged.pdf",
+    "Module 1-4 Summary.md",
     "slides/Module 4/ICT703 - Module 4 - Topic 2 - Lists - Tagged.pdf",
     "slides/Module 4/ICT703 - Module 4 - Topic 1 - Strings - Tagged.pdf",
     "slides/Module 3/ICT703 - Module 3 - Workshop Instructions - Tagged.pdf",
     "slides/Module 5/ICT703 - Module 5 - Topic 1 - Files - Tagged.pdf",
     "Untitled",
-    "slides/Module 4/ICT703 - Module 4 - Workshop Instructions - Tagged.pdf",
     "slides/Module 5/Task 1/ICT703_Assessment 1 Practice Quiz (1).pdf",
     "slides/Module 5/Practice Quizzes/Practice Quiz 3.md",
     "slides/Module 5/Practice Quizzes/Practice Quiz 2.md",
@@ -209,7 +212,6 @@
     "Adam Übungen/pseudo.py",
     "Adam Übungen",
     "practices-oli/__pycache__/module2.cpython-314-pytest-9.0.3.pyc",
-    "practices-oli/module4.py",
     "slides/Module 5/Practice Quizzes/Practice Quiz 4.md",
     "slides/images/Pasted image 20260722101220.png"
   ]
