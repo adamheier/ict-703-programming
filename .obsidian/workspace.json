@@ -11,14 +11,12 @@
             "id": "60148a345536e15c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "slides/Module 5/Practice Quizzes/Practice Quiz 2.md",
-                "mode": "source",
-                "source": false
+                "file": "slides/Module 4/ICT703 - Module 4 - Workshop Instructions - Tagged.pdf"
               },
-              "icon": "lucide-file",
-              "title": "Practice Quiz 2"
+              "icon": "lucide-file-text",
+              "title": "ICT703 - Module 4 - Workshop Instructions - Tagged"
             }
           }
         ]
@@ -198,20 +196,21 @@
   },
   "active": "60148a345536e15c",
   "lastOpenFiles": [
+    "slides/Module 4/ICT703 - Module 4 - Topic 2 - Lists - Tagged.pdf",
+    "slides/Module 4/ICT703 - Module 4 - Topic 1 - Strings - Tagged.pdf",
+    "slides/Module 3/ICT703 - Module 3 - Workshop Instructions - Tagged.pdf",
+    "slides/Module 5/ICT703 - Module 5 - Topic 1 - Files - Tagged.pdf",
+    "Untitled",
+    "slides/Module 4/ICT703 - Module 4 - Workshop Instructions - Tagged.pdf",
+    "slides/Module 5/Task 1/ICT703_Assessment 1 Practice Quiz (1).pdf",
+    "slides/Module 5/Practice Quizzes/Practice Quiz 3.md",
+    "slides/Module 5/Practice Quizzes/Practice Quiz 2.md",
     "Assignments.md",
     "Adam Übungen/pseudo.py",
     "Adam Übungen",
-    "slides/Module 5/Practice Quizzes/Practice Quiz 2.md",
     "practices-oli/__pycache__/module2.cpython-314-pytest-9.0.3.pyc",
     "practices-oli/module4.py",
-    "practices-oli/module3-part2.py",
-    "practices-oli/module2-part3.py",
-    "practices-oli/module2-part2.py",
-    "practices-oli/__pycache__",
-    "practices-oli/module2-part1.py",
-    "practices-oli",
     "slides/Module 5/Practice Quizzes/Practice Quiz 4.md",
-    "slides/Module 5/Practice Quizzes/Practice Quiz 3.md",
     "slides/images/Pasted image 20260722101220.png"
   ]
 }
