@@ -13,15 +13,42 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Module 1-4 Summary.md",
+                "file": "slides/Module 5/Practice Quizzes/Practice Quiz 4.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Module 1-4 Summary"
+              "title": "Practice Quiz 4"
+            }
+          },
+          {
+            "id": "8672021c2efc54a6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "task 1/Task 1.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Task 1"
+            }
+          },
+          {
+            "id": "9f52bb8e8491db25",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "task 2/ICT703-Task2-TaskDescriptionandRequirements.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "ICT703-Task2-TaskDescriptionandRequirements"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -196,23 +223,25 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "60148a345536e15c",
+  "active": "9f52bb8e8491db25",
   "lastOpenFiles": [
-    "slides/Module 4/ICT703 - Module 4 - Workshop Instructions - Tagged.pdf",
-    "Module 1-4 Summary.md",
-    "slides/Module 4/ICT703 - Module 4 - Topic 2 - Lists - Tagged.pdf",
-    "slides/Module 4/ICT703 - Module 4 - Topic 1 - Strings - Tagged.pdf",
-    "slides/Module 3/ICT703 - Module 3 - Workshop Instructions - Tagged.pdf",
-    "slides/Module 5/ICT703 - Module 5 - Topic 1 - Files - Tagged.pdf",
-    "Untitled",
-    "slides/Module 5/Task 1/ICT703_Assessment 1 Practice Quiz (1).pdf",
-    "slides/Module 5/Practice Quizzes/Practice Quiz 3.md",
-    "slides/Module 5/Practice Quizzes/Practice Quiz 2.md",
-    "Assignments.md",
-    "Adam Übungen/pseudo.py",
-    "Adam Übungen",
-    "practices-oli/__pycache__/module2.cpython-314-pytest-9.0.3.pyc",
-    "slides/Module 5/Practice Quizzes/Practice Quiz 4.md",
-    "slides/images/Pasted image 20260722101220.png"
+    "task 2/ICT703Task 2-Template-1.pdf",
+    "task 2/Task 2 submission.pdf",
+    "task 2/Task 2.md",
+    "task 2/ICT703-Task2-TaskDescriptionandRequirements.pdf",
+    "task 2/PEP 8_ The Style Guide for Python Code.pdf",
+    "modules/Module 5/ICT703 - Module 5 - Topic 1 - Files - Tagged.pdf",
+    "modules/Module 12",
+    "modules/Module 11",
+    "modules/Module 9",
+    "modules/Module 8",
+    "modules/Module 10",
+    "general/Assignments.md",
+    "task 1/Task 1.md",
+    "task 1/Module 1-4 Summary.md",
+    "modules/Module 5/Practice Quizzes/Practice Quiz 3.md",
+    "modules/Module 5/Practice Quizzes/Practice Quiz 2.md",
+    "modules/Module 5/Practice Quizzes/Practice Quiz 4.md",
+    "modules/images/Pasted image 20260722101220.png"
   ]
 }
