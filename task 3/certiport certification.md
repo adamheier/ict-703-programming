@@ -1,0 +1,4 @@
+- Gmetrix material in Canvas
+- harder than pl-900
+- test exam in week 11, exam in week 12
+- 
