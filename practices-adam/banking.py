@@ -64,18 +64,7 @@ while True:
         starting_balance += deposit_amount
         print("Your new balance is: ", starting_balance)
     elif command == "withdraw":
-        withdrawal_amount == ""
-
-
-
-
-
-
-
-
-
-
-
+        withdrawal_amount = float(input("Please enter the amount to withdraw: "))
 
 
 

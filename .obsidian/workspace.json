@@ -51,12 +51,14 @@
             "id": "ef7efe43a317d151",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "modules/Module 6/ICT703 - Module 6 - Workshop Instructions - Tagged.pdf"
+                "file": "task 2/task 2 hints.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-file-text",
-              "title": "ICT703 - Module 6 - Workshop Instructions - Tagged"
+              "icon": "lucide-file",
+              "title": "task 2 hints"
             }
           }
         ],
@@ -235,21 +237,24 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "ef7efe43a317d151",
+  "active": "f4c829953bacf825",
   "lastOpenFiles": [
-    "task 3/Task 3 Examination_ Programming.pdf",
-    "practices-adam/module 6/__pycache__/activity1&2.cpython-314.pyc",
-    "practices-adam/module 6/__pycache__",
-    "practices-adam/module 6/translator.py",
-    "translator.py",
-    "practices-adam/module 6/activity1&2.py",
-    "practices-adam/module 6/module_6.py",
-    "practices-adam/module 6/activity1.py",
-    "activity1.py",
-    "practices-adam/module 4/module4.py",
-    "practices-adam/module 4/Activity 4.py",
-    "task 3/certiport certification.md",
+    "task 2/program/accounts.csv",
+    "modules/Module 12/ICT703 - Module 12 - Topic 1 - Text to Speech - Tagged.pdf",
+    "modules/Module 11/ICT703 - Module 11 - Topic 1 - Python and SQL - Tagged.pdf",
+    "modules/Module 11/ICT703 - Module 11 - Workshop Instructions - Tagged.pdf",
+    "modules/Module 10/ICT703 - Module 10 - Topic 1 - Pandas - Tagged.pdf",
+    "modules/Module 10/ICT703 - Module 10 - Topic 2 - Using Pandas - Tagged.pdf",
+    "modules/Module 10/ICT703 - Module 10 - Workshop Instructions - Tagged.pdf",
+    "task 2/Adam Heier - Task 2 - Code.md",
+    "task 2/~$am Heier - Task 2.docx",
+    "task 2/Task 2 submission.pdf",
+    "task 2/Task 2 submission.pdf",
+    "task 2/ICT703-Task2-TaskDescriptionandRequirements.pdf",
     "task 2/task 2 hints.md",
+    "task 2/report-figures/figure1_flowchart.png",
+    "task 2/report-figures/figure2_data_structures.png",
+    "task 3/certiport certification.md",
     "general/Assignments.md",
     "task 1/Task 1.md",
     "task 1/Module 1-4 Summary.md",

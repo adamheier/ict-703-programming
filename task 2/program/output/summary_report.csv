@@ -1,0 +1,18 @@
+statistic,value
+Total records processed,46
+Valid records,28
+Invalid records,18
+Approved transactions,21
+Declined transactions,7
+Total value of approved transactions,"$34,322.65"
+Suspicious transactions,20
+Suspicious accounts,7
+Rule 1 high-value alerts,2
+Rule 2 repeated-decline alerts,1
+Rule 3 multiple-location alerts,2
+Rule 4 rapid-decline alerts,1
+Rule 5 below-threshold alerts,1
+Rule 6 daily-limit alerts,1
+Rule 7 outside-home-location alerts,3
+Rule 8 inactive-account alerts,1
+Rule 9 unknown-account alerts,1

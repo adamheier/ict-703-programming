@@ -1,0 +1,14 @@
+severity,rule,account_id,transaction_ids,reason
+HIGH,Rule 1 - High-Value Transaction,A10025,T1002,"The approved amount of $6,500.00 exceeded the $5,000.00 threshold."
+HIGH,Rule 4 - Rapid Declined Transactions,A20318,"T1006, T1007, T1008, T1009","4 declined transactions within 30 minutes, between 2026-07-11 11:02:11 and 2026-07-11 11:24:58."
+HIGH,Rule 5 - Amounts Just Below Threshold,A50876,"T1019, T1020, T1021","3 approved transactions between $4,500.00 and $5,000.00 within 24 hours, $14,500.00 in total."
+HIGH,Rule 6 - Daily Limit Exceeded,A50876,"T1019, T1020, T1021","Approved transactions on 2026-07-12 totalled $14,500.00, which is above the daily limit of $10,000.00."
+HIGH,Rule 8 - Activity On Inactive Account,A60234,"T1022, T1023",The account has the status SUSPENDED but was used for 2 transactions.
+HIGH,Rule 1 - High-Value Transaction,A70455,T1024,"The approved amount of $7,500.00 exceeded the $5,000.00 threshold."
+MEDIUM,Rule 7 - Transaction Outside Home Location,A10025,T1003,The account was used 1 time outside its home location Brisbane (Sydney).
+MEDIUM,Rule 2 - Repeated Declined Transactions,A20318,"T1006, T1007, T1008, T1009","The account had 4 declined transactions, which is at or above the limit of 4."
+MEDIUM,Rule 3 - Multiple Locations,A30712,"T1011, T1012, T1013, T1014","The account was used in 3 different locations, which is at or above the limit of 3."
+MEDIUM,Rule 7 - Transaction Outside Home Location,A30712,"T1012, T1013","The account was used 2 times outside its home location Sydney (Melbourne, Perth)."
+MEDIUM,Rule 3 - Multiple Locations,A70455,"T1024, T1025, T1026, T1027","The account was used in 3 different locations, which is at or above the limit of 3."
+MEDIUM,Rule 7 - Transaction Outside Home Location,A70455,"T1025, T1027","The account was used 2 times outside its home location Darwin (Alice Springs, Katherine)."
+LOW,Rule 9 - Unknown Account,A90123,T1045,The account ID was not found in the customer account file (1 transaction).

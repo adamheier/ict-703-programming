@@ -1,0 +1,37 @@
+{
+    "thresholds": {
+        "high_value_amount": 5000.0,
+        "declined_count": 4,
+        "location_count": 3,
+        "rapid_decline_count": 4,
+        "rapid_decline_window_minutes": 30,
+        "structuring_min_amount": 4500.0,
+        "structuring_count": 3,
+        "structuring_window_hours": 24
+    },
+    "rule_names": {
+        "RULE_1": "Rule 1 - High-Value Transaction",
+        "RULE_2": "Rule 2 - Repeated Declined Transactions",
+        "RULE_3": "Rule 3 - Multiple Locations",
+        "RULE_4": "Rule 4 - Rapid Declined Transactions",
+        "RULE_5": "Rule 5 - Amounts Just Below Threshold",
+        "RULE_6": "Rule 6 - Daily Limit Exceeded",
+        "RULE_7": "Rule 7 - Transaction Outside Home Location",
+        "RULE_8": "Rule 8 - Activity On Inactive Account",
+        "RULE_9": "Rule 9 - Unknown Account"
+    },
+    "severities": {
+        "RULE_1": "HIGH",
+        "RULE_2": "MEDIUM",
+        "RULE_3": "MEDIUM",
+        "RULE_4": "HIGH",
+        "RULE_5": "HIGH",
+        "RULE_6": "HIGH",
+        "RULE_7": "MEDIUM",
+        "RULE_8": "HIGH",
+        "RULE_9": "LOW"
+    },
+    "options": {
+        "enhanced_validation": true
+    }
+}
