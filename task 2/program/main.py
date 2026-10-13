@@ -1,10 +1,10 @@
 """
 Program: main.py
 Author: Adam Heier
-Last date modified: 16/09/2026
+Last date modified: 18/09/2026
 
 The purpose of this program is to find suspicious activity in a file of
-fictional bank transaction records (ICT703 Assessment Task 2). It reads
+fictional bank transaction records. It reads
 the records from transactions.txt, validates them, stores the valid
 records, applies the fraud-detection rules and displays the suspicious
 transactions and accounts.
@@ -19,7 +19,7 @@ from fraud_detection import (AccountAnalyser, AccountLoader, AlertStore,
                              TransactionStore, TransactionValidator,
                              use_program_folder)
 
-TRANSACTION_FILE = "transactions.txt"   # The records that are analysed
+TRANSACTION_FILE = "transactions.txt"  # The records that are analysed
 ACCOUNT_FILE = "accounts.csv"          # Customer accounts, a CSV file
 CONFIG_FILE = "rules_config.json"      # Thresholds, rule names, severity
 INVALID_RECORD_FILE = "output/invalid_records.csv"
@@ -27,6 +27,7 @@ VALID_RECORD_FILE = "output/valid_transactions.csv"
 ALERT_FILE = "output/alerts.csv"
 SUMMARY_FILE = "output/summary_report.csv"
 LINE_WIDTH = 74                        # Character width of a heading
+LOOKUP_EXAMPLE = "T1002"               # Shown in the lookup section
 
 
 def print_heading(title):
@@ -88,7 +89,25 @@ def print_summary(summary):
     print_heading("SUMMARY REPORT")
     statistics = summary.build()
     for label in statistics:
-        print(f"  {label:<40}{statistics[label]:>12}")
+        print(f"  {label:<52}{statistics[label]:>10}")
+
+
+def report_export(was_written, file_path):
+    """Say whether one export file could be written."""
+    if was_written:
+        print(f"  Saved  : {file_path}")
+    else:
+        print(f"  Warning: {file_path} could not be written.")
+
+
+def print_largest_transactions(store, count=5):
+    """Print the largest approved transactions of the whole file."""
+    print_heading(f"THE {count} LARGEST TRANSACTIONS")
+    for transaction in store.sorted_by_amount()[:count]:
+        print(f"  {transaction.transaction_id}  "
+              f"{transaction.account_id}  "
+              f"${transaction.amount:>10,.2f}  "
+              f"{transaction.location:<14}{transaction.status}")
 
 
 class FraudDetectionApp:
@@ -112,7 +131,6 @@ class FraudDetectionApp:
         self.run_detection()
         summary = self.show_results()
         self.export_results(summary)
-        print()
         print("Analysis finished.")
 
     def load_configuration(self):
@@ -125,7 +143,7 @@ class FraudDetectionApp:
         print(f"Validation mode     : {mode}")
 
     def load_transactions(self):
-        """Read and validate the transaction file."""
+        """Reads and validate the transaction file."""
         validator = TransactionValidator(self.config.enhanced_validation())
         self.loader = TransactionLoader(validator)
         try:
@@ -168,21 +186,37 @@ class FraudDetectionApp:
         print_invalid_records(self.loader.invalid_records)
         print_alerts(self.alert_store)
         print_account_overview(self.store, self.alert_store)
-        summary = SummaryReport(self.loader, self.store, self.alert_store)
+        print_largest_transactions(self.store)
+        self.show_transaction(LOOKUP_EXAMPLE)
+        summary = SummaryReport(self.loader, self.store, self.alert_store,
+                                self.config)
         print_summary(summary)
         return summary
+
+    def show_transaction(self, transaction_id):
+        """Look up one transaction by its ID and print what was found."""
+        print_heading(f"LOOKUP OF TRANSACTION {transaction_id}")
+        transaction = self.store.find_by_id(transaction_id)
+        if transaction is None:
+            print(f"  No valid transaction with the ID {transaction_id}.")
+            return
+        print(f"  {transaction.summary()}")
+        alerts = self.alert_store.filter_by_account(transaction.account_id)
+        print(f"  Alerts on account {transaction.account_id}: "
+              f"{len(alerts)}")
+        for alert in alerts:
+            print(f"    - {alert.rule_name}")
 
     def export_results(self, summary):
         """Save the results to CSV files in the output folder."""
         print_heading("EXPORTED FILES")
-        if self.loader.export_invalid_records(INVALID_RECORD_FILE):
-            print(f"  Saved: {INVALID_RECORD_FILE}")
-        if self.store.export_to_csv(VALID_RECORD_FILE):
-            print(f"  Saved: {VALID_RECORD_FILE}")
-        if self.alert_store.export_to_csv(ALERT_FILE):
-            print(f"  Saved: {ALERT_FILE}")
-        if summary.export_to_csv(SUMMARY_FILE):
-            print(f"  Saved: {SUMMARY_FILE}")
+        report_export(self.loader.export_invalid_records(
+            INVALID_RECORD_FILE), INVALID_RECORD_FILE)
+        report_export(self.store.export_to_csv(VALID_RECORD_FILE),
+                      VALID_RECORD_FILE)
+        report_export(self.alert_store.export_to_csv(ALERT_FILE),
+                      ALERT_FILE)
+        report_export(summary.export_to_csv(SUMMARY_FILE), SUMMARY_FILE)
 
 
 def main():

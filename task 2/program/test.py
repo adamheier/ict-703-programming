@@ -1,17 +1,17 @@
 """
 Program: test.py
 Author: Adam Heier
-Last date modified: 16/09/2026
+Last date modified: 17/09/2026
 
 The purpose of this program is to test the bank transaction fraud
-detection system automatically (ICT703 Assessment Task 2). It asks for
+detection system automatically. It asks for
 no user input:
     python test.py
 
 Every test prints the feature that is tested, the test input, the
 expected result, the actual result and whether the test passed.
 
-The tests are black-box tests (module 8): they only use the input and
+The tests are black-box tests: they only use the input and
 the output of a function, not its internal steps. Each group uses
 positive and negative cases, and the rule tests add boundary value
 analysis on the exact threshold of every rule.
@@ -38,6 +38,7 @@ TEMP_BROKEN_FILE = "output/temp_broken.txt"
 TEMP_CONFIG_FILE = "output/temp_config.json"
 TEMP_EXPORT_FILE = "output/temp_invalid_records.csv"
 TEMP_SUMMARY_FILE = "output/temp_summary.csv"
+LINE_WIDTH = 74                      
 
 
 def record(tid="T3001", account="A10025", kind="TRANSFER", amount="850.00",
@@ -92,37 +93,36 @@ class TestRunner:
 
     def print_summary(self):
         """Print how many tests passed and how many failed."""
-        print("=" * 74)
+        print("=" * LINE_WIDTH)
         print(f"TEST SUMMARY: {self.number} tests, {self.passed} passed, "
               f"{self.failed} failed")
-        print("=" * 74)
+        print("=" * LINE_WIDTH)
 
 
 def print_section(title):
     """Print the heading of a group of tests."""
     print()
-    print("=" * 74)
+    print("=" * LINE_WIDTH)
     print(title)
-    print("=" * 74)
+    print("=" * LINE_WIDTH)
     print()
 
 
-def write_temp_file(file_path, text):
-    """Create a small file that is only needed during the tests."""
+def write_temp_file(file_path, content):
+    """Create a small file that is only needed during the tests.
+
+    A str is written as text, a bytes value is written as raw bytes,
+    which is how the test for an unreadable file is built.
+    """
     folder = os.path.dirname(file_path)
     if folder != "" and not os.path.isdir(folder):
         os.makedirs(folder)
-    with open(file_path, "w", encoding="utf-8") as temp_file:
-        temp_file.write(text)
-
-
-def write_temp_bytes(file_path, data):
-    """Create a file that does not contain valid UTF-8 text."""
-    folder = os.path.dirname(file_path)
-    if folder != "" and not os.path.isdir(folder):
-        os.makedirs(folder)
-    with open(file_path, "wb") as temp_file:
-        temp_file.write(data)
+    if isinstance(content, bytes):
+        with open(file_path, "wb") as temp_file:
+            temp_file.write(content)
+    else:
+        with open(file_path, "w", encoding="utf-8") as temp_file:
+            temp_file.write(content)
 
 
 def delete_temp_files():
@@ -208,7 +208,7 @@ def test_file_handling(runner):
                  "DataFileError", expect_data_file_error(TEMP_EMPTY_FILE))
 
     # A file with bytes that are not valid UTF-8 cannot be read as text.
-    write_temp_bytes(TEMP_BROKEN_FILE, b"\xff\xfe not readable text")
+    write_temp_file(TEMP_BROKEN_FILE, b"\xff\xfe not readable text")
     runner.check("TransactionLoader.load - unreadable file",
                  TEMP_BROKEN_FILE, "DataFileError",
                  expect_data_file_error(TEMP_BROKEN_FILE))
@@ -487,7 +487,7 @@ def test_summary_report(runner):
     alert_store.add_all(FraudDetector(store, config).run_all_rules())
     alert_store.add_all(
         AccountAnalyser(store, accounts, config).run_all_checks())
-    summary = SummaryReport(loader, store, alert_store)
+    summary = SummaryReport(loader, store, alert_store, config)
     statistics = summary.build()
 
     expected_values = [
@@ -507,9 +507,9 @@ def test_summary_report(runner):
 def main():
     """Run all groups of tests and print the overall result."""
     use_program_folder()
-    print("=" * 74)
+    print("=" * LINE_WIDTH)
     print("TEST PROGRAM - BANK TRANSACTION FRAUD DETECTION SYSTEM")
-    print("=" * 74)
+    print("=" * LINE_WIDTH)
     runner = TestRunner()
     test_file_handling(runner)
     test_core_validation(runner)

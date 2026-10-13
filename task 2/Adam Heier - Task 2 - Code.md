@@ -21,10 +21,10 @@ Run with `python main.py`, test with `python test.py` from the program folder. T
 """
 Program: main.py
 Author: Adam Heier
-Last date modified: 16/09/2026
+Last date modified: 18/09/2026
 
 The purpose of this program is to find suspicious activity in a file of
-fictional bank transaction records (ICT703 Assessment Task 2). It reads
+fictional bank transaction records. It reads
 the records from transactions.txt, validates them, stores the valid
 records, applies the fraud-detection rules and displays the suspicious
 transactions and accounts.
@@ -39,7 +39,7 @@ from fraud_detection import (AccountAnalyser, AccountLoader, AlertStore,
                              TransactionStore, TransactionValidator,
                              use_program_folder)
 
-TRANSACTION_FILE = "transactions.txt"   # The records that are analysed
+TRANSACTION_FILE = "transactions.txt"  # The records that are analysed
 ACCOUNT_FILE = "accounts.csv"          # Customer accounts, a CSV file
 CONFIG_FILE = "rules_config.json"      # Thresholds, rule names, severity
 INVALID_RECORD_FILE = "output/invalid_records.csv"
@@ -47,6 +47,7 @@ VALID_RECORD_FILE = "output/valid_transactions.csv"
 ALERT_FILE = "output/alerts.csv"
 SUMMARY_FILE = "output/summary_report.csv"
 LINE_WIDTH = 74                        # Character width of a heading
+LOOKUP_EXAMPLE = "T1002"               # Shown in the lookup section
 
 
 def print_heading(title):
@@ -108,7 +109,25 @@ def print_summary(summary):
     print_heading("SUMMARY REPORT")
     statistics = summary.build()
     for label in statistics:
-        print(f"  {label:<40}{statistics[label]:>12}")
+        print(f"  {label:<52}{statistics[label]:>10}")
+
+
+def report_export(was_written, file_path):
+    """Say whether one export file could be written."""
+    if was_written:
+        print(f"  Saved  : {file_path}")
+    else:
+        print(f"  Warning: {file_path} could not be written.")
+
+
+def print_largest_transactions(store, count=5):
+    """Print the largest approved transactions of the whole file."""
+    print_heading(f"THE {count} LARGEST TRANSACTIONS")
+    for transaction in store.sorted_by_amount()[:count]:
+        print(f"  {transaction.transaction_id}  "
+              f"{transaction.account_id}  "
+              f"${transaction.amount:>10,.2f}  "
+              f"{transaction.location:<14}{transaction.status}")
 
 
 class FraudDetectionApp:
@@ -132,7 +151,6 @@ class FraudDetectionApp:
         self.run_detection()
         summary = self.show_results()
         self.export_results(summary)
-        print()
         print("Analysis finished.")
 
     def load_configuration(self):
@@ -145,7 +163,7 @@ class FraudDetectionApp:
         print(f"Validation mode     : {mode}")
 
     def load_transactions(self):
-        """Read and validate the transaction file."""
+        """Reads and validate the transaction file."""
         validator = TransactionValidator(self.config.enhanced_validation())
         self.loader = TransactionLoader(validator)
         try:
@@ -188,21 +206,37 @@ class FraudDetectionApp:
         print_invalid_records(self.loader.invalid_records)
         print_alerts(self.alert_store)
         print_account_overview(self.store, self.alert_store)
-        summary = SummaryReport(self.loader, self.store, self.alert_store)
+        print_largest_transactions(self.store)
+        self.show_transaction(LOOKUP_EXAMPLE)
+        summary = SummaryReport(self.loader, self.store, self.alert_store,
+                                self.config)
         print_summary(summary)
         return summary
+
+    def show_transaction(self, transaction_id):
+        """Look up one transaction by its ID and print what was found."""
+        print_heading(f"LOOKUP OF TRANSACTION {transaction_id}")
+        transaction = self.store.find_by_id(transaction_id)
+        if transaction is None:
+            print(f"  No valid transaction with the ID {transaction_id}.")
+            return
+        print(f"  {transaction.summary()}")
+        alerts = self.alert_store.filter_by_account(transaction.account_id)
+        print(f"  Alerts on account {transaction.account_id}: "
+              f"{len(alerts)}")
+        for alert in alerts:
+            print(f"    - {alert.rule_name}")
 
     def export_results(self, summary):
         """Save the results to CSV files in the output folder."""
         print_heading("EXPORTED FILES")
-        if self.loader.export_invalid_records(INVALID_RECORD_FILE):
-            print(f"  Saved: {INVALID_RECORD_FILE}")
-        if self.store.export_to_csv(VALID_RECORD_FILE):
-            print(f"  Saved: {VALID_RECORD_FILE}")
-        if self.alert_store.export_to_csv(ALERT_FILE):
-            print(f"  Saved: {ALERT_FILE}")
-        if summary.export_to_csv(SUMMARY_FILE):
-            print(f"  Saved: {SUMMARY_FILE}")
+        report_export(self.loader.export_invalid_records(
+            INVALID_RECORD_FILE), INVALID_RECORD_FILE)
+        report_export(self.store.export_to_csv(VALID_RECORD_FILE),
+                      VALID_RECORD_FILE)
+        report_export(self.alert_store.export_to_csv(ALERT_FILE),
+                      ALERT_FILE)
+        report_export(summary.export_to_csv(SUMMARY_FILE), SUMMARY_FILE)
 
 
 def main():
@@ -223,13 +257,15 @@ if __name__ == "__main__":
 """
 Program: fraud_detection.py
 Author: Adam Heier
-Last date modified: 16/09/2026
+Last date modified: 18/09/2026
 
-The purpose of this module is to hold all the program logic of the bank
-transaction fraud detection system (ICT703 Assessment Task 2): reading
+The purpose of this program is to hold all the program logic of the bank
+transaction fraud detection system: reading
 the data files, checking every record, storing the valid records and
-applying the fraud-detection rules. It writes nothing to the screen, so
-the same classes are used by main.py and by test.py.
+applying the fraud-detection rules. No function in this module writes
+to the screen: a problem is either raised as an error or returned as a
+message, so main.py decides what the user sees and test.py can check
+every class without any output getting in the way.
 
 Contents:
     1. Helper functions for writing CSV files
@@ -278,8 +314,7 @@ def write_csv(file_path, header, rows):
             writer = csv.writer(csv_file)
             writer.writerow(header)
             writer.writerows(rows)
-    except OSError as error:
-        print(f"  Warning: '{file_path}' could not be written ({error}).")
+    except OSError:
         return False
     return True
 
@@ -429,13 +464,12 @@ def default_settings():
 class RuleConfig:
     """Fraud-detection settings loaded from a JSON configuration file."""
 
-    def __init__(self, file_path=None):
-        """Start with the default settings and load the file if given."""
+    def __init__(self, file_path):
+        """Start with the default settings and then read the file."""
         self.settings = default_settings()
         self.source = "built-in default settings"
         self.messages = []
-        if file_path is not None:
-            self.load(file_path)
+        self.load(file_path)
 
     def load(self, file_path):
         """Read the configuration file and overwrite the defaults.
@@ -706,10 +740,7 @@ class TransactionLoader:
         self.invalid_records = []
 
     def load(self, file_path, store):
-        """Read the file, validate the records and fill the store.
-
-        Returns the number of valid transactions that were stored.
-        """
+        """Read the file, validate the records and fill the store."""
         records = read_record_lines(file_path, "timestamp")
         for line_number, line in records:
             self.total_records += 1
@@ -721,7 +752,6 @@ class TransactionLoader:
                                   error.field_name, error.reason))
                 continue
             store.add(transaction)
-        return store.count()
 
     def invalid_count(self):
         """Return the number of rejected records."""
@@ -800,17 +830,6 @@ class AccountLoader:
 
 
 SEVERITY_ORDER = {"HIGH": 0, "MEDIUM": 1, "LOW": 2}
-RULE_LABELS = {
-    "RULE_1": "Rule 1 high-value",
-    "RULE_2": "Rule 2 repeated-decline",
-    "RULE_3": "Rule 3 multiple-location",
-    "RULE_4": "Rule 4 rapid-decline",
-    "RULE_5": "Rule 5 below-threshold",
-    "RULE_6": "Rule 6 daily-limit",
-    "RULE_7": "Rule 7 outside-home-location",
-    "RULE_8": "Rule 8 inactive-account",
-    "RULE_9": "Rule 9 unknown-account",
-}
 
 
 class TransactionStore:
@@ -819,28 +838,29 @@ class TransactionStore:
     def __init__(self):
         """Create an empty store.
 
-        The records are kept twice: a list keeps the order of the file,
-        and a dictionary groups them by account ID so that the account
-        rules do not have to search the whole list again.
+        The records are kept twice: the list transactions keeps the
+        order of the file, and the dictionary transactions_by_account
+        groups them by account ID so that the account rules do not have
+        to search the whole list again.
         """
         self.transactions = []
-        self.accounts = {}
+        self.transactions_by_account = {}
 
     def add(self, transaction):
         """Add one transaction to the list and to its account group."""
         self.transactions.append(transaction)
         account_id = transaction.account_id
-        if account_id not in self.accounts:
-            self.accounts[account_id] = []
-        self.accounts[account_id].append(transaction)
+        if account_id not in self.transactions_by_account:
+            self.transactions_by_account[account_id] = []
+        self.transactions_by_account[account_id].append(transaction)
 
     def account_ids(self):
         """Return the account IDs in alphabetical order."""
-        return sorted(self.accounts.keys())
+        return sorted(self.transactions_by_account.keys())
 
     def transactions_for(self, account_id):
         """Return the transactions of one account."""
-        return self.accounts.get(account_id, [])
+        return self.transactions_by_account.get(account_id, [])
 
     def count(self):
         """Return the number of stored transactions."""
@@ -858,11 +878,11 @@ class TransactionStore:
         return [transaction for transaction in self.transactions
                 if transaction.status == status]
 
-    def sorted_by_amount(self, highest_first=True):
-        """Return all transactions sorted by their amount."""
+    def sorted_by_amount(self):
+        """Return all transactions, the largest amount first."""
         return sorted(self.transactions,
                       key=lambda transaction: transaction.amount,
-                      reverse=highest_first)
+                      reverse=True)
 
     def export_to_csv(self, file_path):
         """Write all stored transactions to a CSV file."""
@@ -1254,14 +1274,22 @@ class AccountAnalyser:
 class SummaryReport:
     """Builds the summary statistics of advanced feature 7."""
 
-    def __init__(self, loader, store, alert_store):
-        """Store the loader, the transactions and the alerts."""
+    def __init__(self, loader, store, alert_store, config):
+        """Store the loader, the transactions, the alerts and config."""
         self.loader = loader
         self.store = store
         self.alert_store = alert_store
+        self.config = config
+        self.statistics = None
 
     def build(self):
-        """Calculate the statistics and return them as a dictionary."""
+        """Calculate the statistics and return them as a dictionary.
+
+        The result is kept, so a second call does not calculate
+        everything again.
+        """
+        if self.statistics is not None:
+            return self.statistics
         approved = self.store.filter_by_status("APPROVED")
         declined = self.store.filter_by_status("DECLINED")
         approved_value = sum(transaction.amount for transaction in approved)
@@ -1278,10 +1306,13 @@ class SummaryReport:
             "Suspicious accounts":
                 len(self.alert_store.suspicious_account_ids()),
         }
-        for rule_key in RULE_LABELS:
-            label = f"{RULE_LABELS[rule_key]} alerts"
+        # The rule names come from the configuration file, so a name
+        # that is changed there also changes in this report.
+        for rule_key in self.config.settings["rule_names"]:
+            label = f"{self.config.rule_name(rule_key)} alerts"
             statistics[label] = len(
                 self.alert_store.filter_by_rule(rule_key))
+        self.statistics = statistics
         return statistics
 
     def export_to_csv(self, file_path):
@@ -1299,10 +1330,10 @@ class SummaryReport:
 """
 Program: test.py
 Author: Adam Heier
-Last date modified: 16/09/2026
+Last date modified: 17/09/2026
 
 The purpose of this program is to test the bank transaction fraud
-detection system automatically (ICT703 Assessment Task 2). It asks for
+detection system automatically. It asks for
 no user input:
     python test.py
 
@@ -1336,6 +1367,7 @@ TEMP_BROKEN_FILE = "output/temp_broken.txt"
 TEMP_CONFIG_FILE = "output/temp_config.json"
 TEMP_EXPORT_FILE = "output/temp_invalid_records.csv"
 TEMP_SUMMARY_FILE = "output/temp_summary.csv"
+LINE_WIDTH = 74                        # Character width of a heading
 
 
 def record(tid="T3001", account="A10025", kind="TRANSFER", amount="850.00",
@@ -1390,37 +1422,36 @@ class TestRunner:
 
     def print_summary(self):
         """Print how many tests passed and how many failed."""
-        print("=" * 74)
+        print("=" * LINE_WIDTH)
         print(f"TEST SUMMARY: {self.number} tests, {self.passed} passed, "
               f"{self.failed} failed")
-        print("=" * 74)
+        print("=" * LINE_WIDTH)
 
 
 def print_section(title):
     """Print the heading of a group of tests."""
     print()
-    print("=" * 74)
+    print("=" * LINE_WIDTH)
     print(title)
-    print("=" * 74)
+    print("=" * LINE_WIDTH)
     print()
 
 
-def write_temp_file(file_path, text):
-    """Create a small file that is only needed during the tests."""
+def write_temp_file(file_path, content):
+    """Create a small file that is only needed during the tests.
+
+    A str is written as text, a bytes value is written as raw bytes,
+    which is how the test for an unreadable file is built.
+    """
     folder = os.path.dirname(file_path)
     if folder != "" and not os.path.isdir(folder):
         os.makedirs(folder)
-    with open(file_path, "w", encoding="utf-8") as temp_file:
-        temp_file.write(text)
-
-
-def write_temp_bytes(file_path, data):
-    """Create a file that does not contain valid UTF-8 text."""
-    folder = os.path.dirname(file_path)
-    if folder != "" and not os.path.isdir(folder):
-        os.makedirs(folder)
-    with open(file_path, "wb") as temp_file:
-        temp_file.write(data)
+    if isinstance(content, bytes):
+        with open(file_path, "wb") as temp_file:
+            temp_file.write(content)
+    else:
+        with open(file_path, "w", encoding="utf-8") as temp_file:
+            temp_file.write(content)
 
 
 def delete_temp_files():
@@ -1506,7 +1537,7 @@ def test_file_handling(runner):
                  "DataFileError", expect_data_file_error(TEMP_EMPTY_FILE))
 
     # A file with bytes that are not valid UTF-8 cannot be read as text.
-    write_temp_bytes(TEMP_BROKEN_FILE, b"\xff\xfe not readable text")
+    write_temp_file(TEMP_BROKEN_FILE, b"\xff\xfe not readable text")
     runner.check("TransactionLoader.load - unreadable file",
                  TEMP_BROKEN_FILE, "DataFileError",
                  expect_data_file_error(TEMP_BROKEN_FILE))
@@ -1785,7 +1816,7 @@ def test_summary_report(runner):
     alert_store.add_all(FraudDetector(store, config).run_all_rules())
     alert_store.add_all(
         AccountAnalyser(store, accounts, config).run_all_checks())
-    summary = SummaryReport(loader, store, alert_store)
+    summary = SummaryReport(loader, store, alert_store, config)
     statistics = summary.build()
 
     expected_values = [
@@ -1805,9 +1836,9 @@ def test_summary_report(runner):
 def main():
     """Run all groups of tests and print the overall result."""
     use_program_folder()
-    print("=" * 74)
+    print("=" * LINE_WIDTH)
     print("TEST PROGRAM - BANK TRANSACTION FRAUD DETECTION SYSTEM")
-    print("=" * 74)
+    print("=" * LINE_WIDTH)
     runner = TestRunner()
     test_file_handling(runner)
     test_core_validation(runner)
@@ -1831,7 +1862,7 @@ if __name__ == "__main__":
 *Transaction data*
 
 ```text
-# Fictional transaction data for ICT703 Task 2 (Adam Heier)
+# Fictional transaction data for ICT703 Task 2
 # Format: timestamp | transaction_id | account_id | transaction_type | amount | location | status
 # Valid and invalid records are mixed, as they would be in a real export.
 timestamp | transaction_id | account_id | transaction_type | amount | location | status
@@ -1906,40 +1937,40 @@ A11500,SAVINGS,Newcastle,2000.00,DORMANT
 
 ```json
 {
-    "thresholds": {
-        "high_value_amount": 5000.0,
-        "declined_count": 4,
-        "location_count": 3,
-        "rapid_decline_count": 4,
-        "rapid_decline_window_minutes": 30,
-        "structuring_min_amount": 4500.0,
-        "structuring_count": 3,
-        "structuring_window_hours": 24
-    },
-    "rule_names": {
-        "RULE_1": "Rule 1 - High-Value Transaction",
-        "RULE_2": "Rule 2 - Repeated Declined Transactions",
-        "RULE_3": "Rule 3 - Multiple Locations",
-        "RULE_4": "Rule 4 - Rapid Declined Transactions",
-        "RULE_5": "Rule 5 - Amounts Just Below Threshold",
-        "RULE_6": "Rule 6 - Daily Limit Exceeded",
-        "RULE_7": "Rule 7 - Transaction Outside Home Location",
-        "RULE_8": "Rule 8 - Activity On Inactive Account",
-        "RULE_9": "Rule 9 - Unknown Account"
-    },
-    "severities": {
-        "RULE_1": "HIGH",
-        "RULE_2": "MEDIUM",
-        "RULE_3": "MEDIUM",
-        "RULE_4": "HIGH",
-        "RULE_5": "HIGH",
-        "RULE_6": "HIGH",
-        "RULE_7": "MEDIUM",
-        "RULE_8": "HIGH",
-        "RULE_9": "LOW"
-    },
-    "options": {
-        "enhanced_validation": true
-    }
+  "thresholds": {
+    "high_value_amount": 5000.0,
+    "declined_count": 4,
+    "location_count": 3,
+    "rapid_decline_count": 4,
+    "rapid_decline_window_minutes": 30,
+    "structuring_min_amount": 4500.0,
+    "structuring_count": 3,
+    "structuring_window_hours": 24
+  },
+  "rule_names": {
+    "RULE_1": "Rule 1 - High-Value Transaction",
+    "RULE_2": "Rule 2 - Repeated Declined Transactions",
+    "RULE_3": "Rule 3 - Multiple Locations",
+    "RULE_4": "Rule 4 - Rapid Declined Transactions",
+    "RULE_5": "Rule 5 - Amounts Just Below Threshold",
+    "RULE_6": "Rule 6 - Daily Limit Exceeded",
+    "RULE_7": "Rule 7 - Transaction Outside Home Location",
+    "RULE_8": "Rule 8 - Activity On Inactive Account",
+    "RULE_9": "Rule 9 - Unknown Account"
+  },
+  "severities": {
+    "RULE_1": "HIGH",
+    "RULE_2": "MEDIUM",
+    "RULE_3": "MEDIUM",
+    "RULE_4": "HIGH",
+    "RULE_5": "HIGH",
+    "RULE_6": "HIGH",
+    "RULE_7": "MEDIUM",
+    "RULE_8": "HIGH",
+    "RULE_9": "LOW"
+  },
+  "options": {
+    "enhanced_validation": true
+  }
 }
 ```

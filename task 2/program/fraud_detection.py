@@ -1,13 +1,15 @@
 """
 Program: fraud_detection.py
 Author: Adam Heier
-Last date modified: 16/09/2026
+Last date modified: 18/09/2026
 
-The purpose of this module is to hold all the program logic of the bank
-transaction fraud detection system (ICT703 Assessment Task 2): reading
+The purpose of this program is to hold all the program logic of the bank
+transaction fraud detection system: reading
 the data files, checking every record, storing the valid records and
-applying the fraud-detection rules. It writes nothing to the screen, so
-the same classes are used by main.py and by test.py.
+applying the fraud-detection rules. No function in this module writes
+to the screen: a problem is either raised as an error or returned as a
+message, so main.py decides what the user sees and test.py can check
+every class without any output getting in the way.
 
 Contents:
     1. Helper functions for writing CSV files
@@ -56,8 +58,7 @@ def write_csv(file_path, header, rows):
             writer = csv.writer(csv_file)
             writer.writerow(header)
             writer.writerows(rows)
-    except OSError as error:
-        print(f"  Warning: '{file_path}' could not be written ({error}).")
+    except OSError:
         return False
     return True
 
@@ -207,13 +208,12 @@ def default_settings():
 class RuleConfig:
     """Fraud-detection settings loaded from a JSON configuration file."""
 
-    def __init__(self, file_path=None):
-        """Start with the default settings and load the file if given."""
+    def __init__(self, file_path):
+        """Start with the default settings and then read the file."""
         self.settings = default_settings()
         self.source = "built-in default settings"
         self.messages = []
-        if file_path is not None:
-            self.load(file_path)
+        self.load(file_path)
 
     def load(self, file_path):
         """Read the configuration file and overwrite the defaults.
@@ -484,10 +484,7 @@ class TransactionLoader:
         self.invalid_records = []
 
     def load(self, file_path, store):
-        """Read the file, validate the records and fill the store.
-
-        Returns the number of valid transactions that were stored.
-        """
+        """Read the file, validate the records and fill the store."""
         records = read_record_lines(file_path, "timestamp")
         for line_number, line in records:
             self.total_records += 1
@@ -499,7 +496,6 @@ class TransactionLoader:
                                   error.field_name, error.reason))
                 continue
             store.add(transaction)
-        return store.count()
 
     def invalid_count(self):
         """Return the number of rejected records."""
@@ -578,17 +574,6 @@ class AccountLoader:
 
 
 SEVERITY_ORDER = {"HIGH": 0, "MEDIUM": 1, "LOW": 2}
-RULE_LABELS = {
-    "RULE_1": "Rule 1 high-value",
-    "RULE_2": "Rule 2 repeated-decline",
-    "RULE_3": "Rule 3 multiple-location",
-    "RULE_4": "Rule 4 rapid-decline",
-    "RULE_5": "Rule 5 below-threshold",
-    "RULE_6": "Rule 6 daily-limit",
-    "RULE_7": "Rule 7 outside-home-location",
-    "RULE_8": "Rule 8 inactive-account",
-    "RULE_9": "Rule 9 unknown-account",
-}
 
 
 class TransactionStore:
@@ -597,28 +582,29 @@ class TransactionStore:
     def __init__(self):
         """Create an empty store.
 
-        The records are kept twice: a list keeps the order of the file,
-        and a dictionary groups them by account ID so that the account
-        rules do not have to search the whole list again.
+        The records are kept twice: the list transactions keeps the
+        order of the file, and the dictionary transactions_by_account
+        groups them by account ID so that the account rules do not have
+        to search the whole list again.
         """
         self.transactions = []
-        self.accounts = {}
+        self.transactions_by_account = {}
 
     def add(self, transaction):
         """Add one transaction to the list and to its account group."""
         self.transactions.append(transaction)
         account_id = transaction.account_id
-        if account_id not in self.accounts:
-            self.accounts[account_id] = []
-        self.accounts[account_id].append(transaction)
+        if account_id not in self.transactions_by_account:
+            self.transactions_by_account[account_id] = []
+        self.transactions_by_account[account_id].append(transaction)
 
     def account_ids(self):
         """Return the account IDs in alphabetical order."""
-        return sorted(self.accounts.keys())
+        return sorted(self.transactions_by_account.keys())
 
     def transactions_for(self, account_id):
         """Return the transactions of one account."""
-        return self.accounts.get(account_id, [])
+        return self.transactions_by_account.get(account_id, [])
 
     def count(self):
         """Return the number of stored transactions."""
@@ -636,11 +622,11 @@ class TransactionStore:
         return [transaction for transaction in self.transactions
                 if transaction.status == status]
 
-    def sorted_by_amount(self, highest_first=True):
-        """Return all transactions sorted by their amount."""
+    def sorted_by_amount(self):
+        """Return all transactions, the largest amount first."""
         return sorted(self.transactions,
                       key=lambda transaction: transaction.amount,
-                      reverse=highest_first)
+                      reverse=True)
 
     def export_to_csv(self, file_path):
         """Write all stored transactions to a CSV file."""
@@ -1032,14 +1018,22 @@ class AccountAnalyser:
 class SummaryReport:
     """Builds the summary statistics of advanced feature 7."""
 
-    def __init__(self, loader, store, alert_store):
-        """Store the loader, the transactions and the alerts."""
+    def __init__(self, loader, store, alert_store, config):
+        """Store the loader, the transactions, the alerts and config."""
         self.loader = loader
         self.store = store
         self.alert_store = alert_store
+        self.config = config
+        self.statistics = None
 
     def build(self):
-        """Calculate the statistics and return them as a dictionary."""
+        """Calculate the statistics and return them as a dictionary.
+
+        The result is kept, so a second call does not calculate
+        everything again.
+        """
+        if self.statistics is not None:
+            return self.statistics
         approved = self.store.filter_by_status("APPROVED")
         declined = self.store.filter_by_status("DECLINED")
         approved_value = sum(transaction.amount for transaction in approved)
@@ -1056,10 +1050,13 @@ class SummaryReport:
             "Suspicious accounts":
                 len(self.alert_store.suspicious_account_ids()),
         }
-        for rule_key in RULE_LABELS:
-            label = f"{RULE_LABELS[rule_key]} alerts"
+        # The rule names come from the configuration file, so a name
+        # that is changed there also changes in this report.
+        for rule_key in self.config.settings["rule_names"]:
+            label = f"{self.config.rule_name(rule_key)} alerts"
             statistics[label] = len(
                 self.alert_store.filter_by_rule(rule_key))
+        self.statistics = statistics
         return statistics
 
     def export_to_csv(self, file_path):
@@ -1067,3 +1064,7 @@ class SummaryReport:
         statistics = self.build()
         rows = [[label, statistics[label]] for label in statistics]
         return write_csv(file_path, ["statistic", "value"], rows)
+
+
+
+   

@@ -1,4 +1,4 @@
-# Fictional transaction data for ICT703 Task 2 (Adam Heier)
+# Fictional transaction data for ICT703 Task 2
 # Format: timestamp | transaction_id | account_id | transaction_type | amount | location | status
 # Valid and invalid records are mixed, as they would be in a real export.
 timestamp | transaction_id | account_id | transaction_type | amount | location | status

@@ -11,14 +11,10 @@
             "id": "60148a345536e15c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "slides/Module 5/Practice Quizzes/Practice Quiz 4.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Practice Quiz 4"
+              "title": "New tab"
             }
           },
           {
@@ -41,6 +37,18 @@
             "state": {
               "type": "pdf",
               "state": {
+                "file": "task 2/ICT703Task 2-Template-1.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "ICT703Task 2-Template-1"
+            }
+          },
+          {
+            "id": "ef7efe43a317d151",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
                 "file": "task 2/ICT703-Task2-TaskDescriptionandRequirements.pdf"
               },
               "icon": "lucide-file-text",
@@ -48,21 +56,31 @@
             }
           },
           {
-            "id": "ef7efe43a317d151",
+            "id": "791a553babdf4907",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "task 2/task 2 hints.md",
-                "mode": "source",
-                "source": false
+                "file": "task 3/Task 3 Examination_ Programming.pdf"
               },
-              "icon": "lucide-file",
-              "title": "task 2 hints"
+              "icon": "lucide-file-text",
+              "title": "Task 3 Examination_ Programming"
+            }
+          },
+          {
+            "id": "4a8edd8f9170ed64",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "task 3/Python_Spickzettel_Task3.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "Python_Spickzettel_Task3"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -121,7 +139,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 263.74609375
+    "width": 200
   },
   "right": {
     "id": "02de2aaf51414927",
@@ -237,30 +255,39 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f4c829953bacf825",
+  "active": "4a8edd8f9170ed64",
   "lastOpenFiles": [
-    "task 2/program/accounts.csv",
-    "modules/Module 12/ICT703 - Module 12 - Topic 1 - Text to Speech - Tagged.pdf",
-    "modules/Module 11/ICT703 - Module 11 - Topic 1 - Python and SQL - Tagged.pdf",
-    "modules/Module 11/ICT703 - Module 11 - Workshop Instructions - Tagged.pdf",
-    "modules/Module 10/ICT703 - Module 10 - Topic 1 - Pandas - Tagged.pdf",
-    "modules/Module 10/ICT703 - Module 10 - Topic 2 - Using Pandas - Tagged.pdf",
-    "modules/Module 10/ICT703 - Module 10 - Workshop Instructions - Tagged.pdf",
-    "task 2/Adam Heier - Task 2 - Code.md",
-    "task 2/~$am Heier - Task 2.docx",
-    "task 2/Task 2 submission.pdf",
-    "task 2/Task 2 submission.pdf",
+    "task 3/Python_Spickzettel_Task3 1.pdf",
+    "task 3/Python_Spickzettel_Task3.pdf",
+    "task 3/Python_Spickzettel_Task3.md",
+    "task 3/measure_up/Screenshot 2026-10-13 at 13.22.52.png",
+    "task 3/ITS-OD-303-Python.pdf",
+    "task 3/Task 3 Examination_ Programming.pdf",
+    "task 3/Task 3.md",
+    "task 3/Screenshot 2026-10-13 at 13.08.16.png",
+    "task 3/Python_3_Zertifizierungs-Spickzettel.png",
+    "task 3/Python_INF-303_Student_Workbook.pdf",
+    "task 3/Python_INF-303_Student_Follow-Along_Files.zip",
+    "task 3/measure_up/Screenshot 2026-10-13 at 13.22.42.png",
+    "task 3/measure_up/Screenshot 2026-10-13 at 13.22.30.png",
+    "task 3/measure_up/Screenshot 2026-10-13 at 13.22.22.png",
+    "task 3/measure_up/Screenshot 2026-10-13 at 13.22.08.png",
+    "task 3/measure_up/Screenshot 2026-10-13 at 13.21.46.png",
+    "task 3/measure_up/Screenshot 2026-10-13 at 13.21.36.png",
+    "task 3/measure_up/Screenshot 2026-10-13 at 13.21.22.png",
+    "task 2/Task 2 Feedback.md",
+    "task 3/measure_up",
     "task 2/ICT703-Task2-TaskDescriptionandRequirements.pdf",
+    "task 2/Adam Heier - Task 2/output/valid_transactions.csv",
+    "task 2/Adam Heier - Task 2/output/summary_report.csv",
     "task 2/task 2 hints.md",
-    "task 2/report-figures/figure1_flowchart.png",
-    "task 2/report-figures/figure2_data_structures.png",
+    "task 2/Adam Heier - Task 2 - Code.md",
     "task 3/certiport certification.md",
     "general/Assignments.md",
     "task 1/Task 1.md",
     "task 1/Module 1-4 Summary.md",
     "modules/Module 5/Practice Quizzes/Practice Quiz 3.md",
     "modules/Module 5/Practice Quizzes/Practice Quiz 2.md",
-    "modules/Module 5/Practice Quizzes/Practice Quiz 4.md",
-    "modules/images/Pasted image 20260722101220.png"
+    "modules/Module 5/Practice Quizzes/Practice Quiz 4.md"
   ]
 }
